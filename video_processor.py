@@ -14,7 +14,12 @@ def split_videofile(filepath):
         'tmp/out.m4a',
     ])
 
-
+    run([
+        'ffmpeg',
+        '-i',
+        filepath,
+        'tmp/frames/frame%04d.png',
+    ])
 
 if __name__ == '__main__':
     split_videofile(filepath='Bad-Apple.mp4')
