@@ -7,6 +7,7 @@ from os import remove, makedirs, listdir
 from shutil import rmtree
 
 from image_processor import render_frame
+from video_processor import split_videofile
 
 def open_img(imagepath, panel: Label):
     # opens the image
@@ -22,7 +23,8 @@ def open_img(imagepath, panel: Label):
     panel.image = img
     panel.configure(image=img)
 
-def play_images(root, image_folder, panel):
+def play_images(button:Button, root, image_folder, panel):
+    button.config(state=DISABLED)
     for file in listdir(image_folder):
         output_image_path = render_frame(
             source_img_path=f"{image_folder}/{file}"
@@ -32,6 +34,7 @@ def play_images(root, image_folder, panel):
             panel=panel
         )
         root.update()
+    button.config(state=ACTIVE)
 
 def main():
     # Create a window
@@ -51,7 +54,7 @@ def main():
     panel.grid(row = 2)
 
     # Create a button and place it into the window using grid layout
-    btn = Button(root, text ='open image', command = lambda: play_images(root=root, image_folder="tmp/frames/", panel=panel))
+    btn = Button(root, text ='open image', command = lambda: play_images(button=btn, root=root, image_folder="tmp/frames/", panel=panel))
     btn.grid(row = 1, columnspan = 4)
     root.mainloop()
 
@@ -70,4 +73,5 @@ def clean_cache():
 
 if __name__ == '__main__':
     # clean_cache()
+    # split_videofile("Bad-Apple.mp4")
     main()
