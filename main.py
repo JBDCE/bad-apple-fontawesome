@@ -1,8 +1,52 @@
-from os import remove, makedirs
+from tkinter import *
+from tkinter import ttk
+# loading Python Imaging Library
+from PIL import ImageTk, Image
+
+from os import remove, makedirs, listdir
 from shutil import rmtree
 
+def open_img(root, imagepath, panel: Label):
+    # opens the image
+    img = Image.open(imagepath)
+    
+    # resize the image and apply a high-quality down sampling filter
+    img = img.resize((640, 360), Image.LANCZOS)
+
+    # PhotoImage class is used to add image to widgets, icons etc
+    img = ImageTk.PhotoImage(img)
+
+    # set the image as img
+    panel.image = img
+    panel.configure(image=img)
+    panel.grid(row = 2)
+
+
+def play_images(root, image_folder, panel):
+    for file in listdir(image_folder):
+        open_img(root=root, imagepath=f"{image_folder}/{file}", panel=panel)
+        root.update()
+
 def main():
-    pass
+    # Create a window
+    root = Tk()
+
+    # Set Title as Image Loader
+    root.title("Image Loader")
+
+    # Set the resolution of window
+    root.geometry("1280x720+640+360")
+
+    # Allow Window to be resizable
+    root.resizable(width = True, height = True)
+
+    # create a label
+    panel = Label(root)
+
+    # Create a button and place it into the window using grid layout
+    btn = Button(root, text ='open image', command = lambda: play_images(root=root, image_folder="tmp/frames/", panel=panel))
+    btn.grid(row = 1, columnspan = 4)
+    root.mainloop()
 
 def clean_cache():
     try:
@@ -17,7 +61,6 @@ def clean_cache():
     )
     makedirs("tmp/frames/")
 
-
 if __name__ == '__main__':
-    clean_cache()
+    # clean_cache()
     main()
