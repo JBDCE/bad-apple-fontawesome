@@ -6,7 +6,9 @@ from PIL import ImageTk, Image
 from os import remove, makedirs, listdir
 from shutil import rmtree
 
-def open_img(root, imagepath, panel: Label):
+from image_processor import render_frame
+
+def open_img(imagepath, panel: Label):
     # opens the image
     img = Image.open(imagepath)
     
@@ -19,12 +21,16 @@ def open_img(root, imagepath, panel: Label):
     # set the image as img
     panel.image = img
     panel.configure(image=img)
-    panel.grid(row = 2)
-
 
 def play_images(root, image_folder, panel):
     for file in listdir(image_folder):
-        open_img(root=root, imagepath=f"{image_folder}/{file}", panel=panel)
+        output_image_path = render_frame(
+            source_img_path=f"{image_folder}/{file}"
+        )
+        open_img(
+            imagepath=output_image_path,
+            panel=panel
+        )
         root.update()
 
 def main():
@@ -42,6 +48,7 @@ def main():
 
     # create a label
     panel = Label(root)
+    panel.grid(row = 2)
 
     # Create a button and place it into the window using grid layout
     btn = Button(root, text ='open image', command = lambda: play_images(root=root, image_folder="tmp/frames/", panel=panel))
