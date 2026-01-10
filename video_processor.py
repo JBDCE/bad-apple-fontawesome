@@ -18,7 +18,7 @@ def split_videofile(input_filepath):
         'ffmpeg',
         '-i',
         input_filepath,
-        'tmp/frames/frame%04d.png',
+        'tmp/frames/%04d.png',
     ])
 
 def merge_frames():
