@@ -1,2 +1,4 @@
 Bad-Apple.mp4
 venv/
+tmp/
+__pycache__/

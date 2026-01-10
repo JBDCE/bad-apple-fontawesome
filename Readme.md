@@ -7,3 +7,6 @@ Ill be dabbeling with the pillow image library for python and trying to render a
 Fontawesome icons will be integrated using the ttkbootstrap-icons-fa package.
 
 Lets see where this journey takes me..
+
+First hurdle:
+Installing ffmpeg to path in windows. Why am i still not using the wsl?
