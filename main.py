@@ -93,9 +93,16 @@ if __name__ == '__main__':
         ),
         action='store_true'
     )
+    parser.add_argument(
+        '--headless',
+        help=(
+            "Add this parameter to skip rendering a gui "
+            "and just perform the image processing "
+            "directly using the arguments provided"
+        ),
+        action='store_true',
+    )
     args = parser.parse_args()
-
-    print(args.remove)
 
     if args.remove:
         clean_cache()
@@ -103,4 +110,5 @@ if __name__ == '__main__':
     # TODO Call this on a button input by the user instead
     split_videofile(args.input)
     merge_frames()
-    main()
+    if not args.headless:
+        main()
