@@ -20,15 +20,17 @@ def split_videofile(input_filepath):
     return
 
 def merge_frames():
-    # TODO here another ffmpeg run is used to merge
+    # TODO Figure out why the output video seeems slowed down the Video
+    # claims to be at the right frame rate but i get a noticable audio and video desync
+
     # the split and processed picture files back into an output moviefile
     run([
         'ffmpeg',
         '-i', 'tmp/outframes/%04d.png',  # Add the frames separated
-        '-i', 'tmp/audio.m4a'  # The audio file separated
+        '-i', 'tmp/audio.m4a',  # The audio file separated
         '-c:v', 'libx264',  # Videocodec
         '-c:a', 'copy', # Audo Codec
-        '-r', '25',  # Framerate  TODO This value might change for a new input file
+        '-r', '30/1',  # Framerate  TODO This value might change for a new input file
         '-pix_fmt', 'yuv420p',  # Pixel format  TODO Figure out if this might change as well
         '-shortest',  # Some audio padding parameter no clue yet
         'out.mp4',  # TODO Add the option to rename this or give it a better filename
