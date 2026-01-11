@@ -7,7 +7,7 @@ from os import remove, makedirs, listdir
 from shutil import rmtree
 
 from image_processor import render_frame
-from video_processor import split_videofile
+from video_processor import split_videofile, merge_frames
 
 from argparse import ArgumentParser
 
@@ -61,7 +61,7 @@ def main():
 def clean_cache():
     try:
         remove(
-            "tmp/out.m4a",
+            "tmp/audio.m4a",
         )
     except FileNotFoundError:
         pass
@@ -100,5 +100,7 @@ if __name__ == '__main__':
     if args.remove:
         clean_cache()
 
+    # TODO Call this on a button input by the user instead
     split_videofile(args.input)
+    merge_frames()
     main()
