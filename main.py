@@ -11,17 +11,15 @@ from video_processor import split_videofile
 
 from argparse import ArgumentParser
 
-def open_img(imagepath, panel: Label,):
-    # opens the image
+def open_img(imagepath, panel: Label, size=(640, 360)):
+    # Handle loading an imagefile to be displayed inside
+    # a label passed to this function.
+    # The image is sampled to match the given size input.
     img = Image.open(imagepath)
-    
-    # resize the image and apply a high-quality down sampling filter
-    img = img.resize((640, 360), Image.LANCZOS)
-
-    # PhotoImage class is used to add image to widgets, icons etc
+    img = img.resize(size, Image.LANCZOS)
     img = ImageTk.PhotoImage(img)
 
-    # set the image as img
+    # I dont understand why i have to add the image twich in here but tk breaks when i dont
     panel.image = img
     panel.configure(image=img)
 
