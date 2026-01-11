@@ -9,7 +9,9 @@ from shutil import rmtree
 from image_processor import render_frame
 from video_processor import split_videofile
 
-def open_img(imagepath, panel: Label):
+from argparse import ArgumentParser
+
+def open_img(imagepath, panel: Label,):
     # opens the image
     img = Image.open(imagepath)
     
@@ -72,6 +74,33 @@ def clean_cache():
     makedirs("tmp/frames/")
 
 if __name__ == '__main__':
-    # clean_cache()
-    # split_videofile("Bad-Apple.mp4")
+    parser = ArgumentParser(
+        prog='bad-apple-fontawesome',
+        description=(
+            'The aim of this project is to recreate the '
+            'famous bad apple music video using icons '
+            'from the fontawesome library.'
+        ),
+    )
+    parser.add_argument(
+        '-i', '--input',
+        help="Choose the input file to be parsed",
+        default="Bad-Apple.mp4"
+    )
+    parser.add_argument(
+        '-rm', '--remove',
+        help=(
+            "Add this argument to clear out the created "
+            "tmp folder to restart generation from the start."
+        ),
+        action='store_true'
+    )
+    args = parser.parse_args()
+
+    print(args.remove)
+
+    if args.remove:
+        clean_cache()
+
+    split_videofile(args.input)
     main()
